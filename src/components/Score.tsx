@@ -1,8 +1,8 @@
 import React from "react";
 
-import './Score.css'
+import "./Score.css";
 
-const Score = ({ value = 5 }:{ value?: string | number }) => {
+const Score = ({ value = 5 }: { value?: string | number }) => {
   const getBorderColor = () => {
     if (value >= 7) {
       return "border-green-400";
@@ -13,7 +13,9 @@ const Score = ({ value = 5 }:{ value?: string | number }) => {
     }
   };
 
-  const score = Math.floor((typeof value == "string") ? parseFloat(value) : value);
+  const score = Math.floor(
+    typeof value == "string" ? parseFloat(value) : value
+  );
 
   return (
     <span
@@ -21,7 +23,7 @@ const Score = ({ value = 5 }:{ value?: string | number }) => {
     >
       {score}
     </span>
-  )
+  );
 };
 
 export default Score;
