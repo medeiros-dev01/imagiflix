@@ -8,6 +8,7 @@ import Hero from "./components/Hero";
 import Navbar from "./components/Navbar";
 import Carousel from "./components/Carousel";
 import Footer from "./components/Footer";
+import Modal from "./components/Modal";
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -94,6 +95,7 @@ const App = () => {
         </>
       )}
       <Footer />
+      {title && <Modal {...title} />}
     </div>
   );
 };
