@@ -44,14 +44,17 @@ const App = () => {
   };
 
   const getTitle = async ({ type, id }: Title) => {
+    setLoading(true);
     const title = await fetch(`${URL}/${type}/${id}${APISTRING}`);
     const titleData = await title.json();
     setTitle(titleData);
+    setLoading(false)
   };
 
   useEffect(() => {
 
     emitter.addListener(CONST.EVENTS.PosterClick, getTitle)
+    emitter.addListener(CONST.EVENTS.ModalClose, () => setTitle(undefined))
 
     const fetchData = async () => {
       const movies = await fetch(
@@ -70,9 +73,13 @@ const App = () => {
     };
 
     fetchData();
+
+    // return emitter.removeAllListeners();
   }, []);
 
-   useEffect(() => title && console.log(title), [title])
+  useEffect(() => 
+    title && console.log(title), [title]
+  );
 
   return (
     <div className="m-auto antialised font-sans bg-black text-white">
@@ -91,11 +98,11 @@ const App = () => {
             data={getMovieList()}
           />
           <Carousel title="Séries populares" data={series?.results} />
-          <Carousel title="Placeholder" />
+          <Carousel title="Séries populares" data={series?.results} />
         </>
       )}
       <Footer />
-      {title && <Modal {...title} />}
+      {!loading && title && <Modal {...title} />}
     </div>
   );
 };

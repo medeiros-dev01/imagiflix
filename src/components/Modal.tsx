@@ -1,9 +1,57 @@
 import React from "react";
+import emitter from "../utils/eventEmitter";
+import CONST from "../data/constants";
 
-const Modal = ({ poster_path, title, original_title, overview, vote_average, runtime, video}: any) => {
+import Score from "./Score";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
+
+const Modal = ({
+  poster_path,
+  title,
+  original_title,
+  name,
+  original_name,
+  overview,
+  vote_average,
+  runtime,
+  number_of_seasons,
+}: any) => {
+  const { IMAGEURL } = CONST;
+
+  const handleClick = () => {
+    emitter.emit(CONST.EVENTS.ModalClose);
+  };
+
   return (
     <div className="fixed top-0 left-0 z-10 p-20 w-full h-screen grid place-items-center">
-      <div className="w-full h-full grid place-items-center bg-black shadow-2xl opacity-50">Modal</div>
+      <article className="w-full h-full grid grid-flow-col  gap-4 p-8 bg-black shadow-2xl opacity-100">
+        <img
+          className="w-5/5 h-full"
+          src={`${IMAGEURL}/w500/${poster_path}`}
+          alt={title ? title : name}
+        />
+        <div className="relative">
+          <FontAwesomeIcon
+            className="cursor-pointer absolute top-0 right-0 text-red-600  "
+            icon={faTimesCircle}
+            size="2x"
+            onClick={handleClick}
+          />
+          <h2 className="text-4xl font-bold">{title ? title : name}</h2>
+          <h6 className="font-bold italic">
+            {original_title ? original_title : original_name}
+          </h6>
+          <p className="my-8 ">{overview}</p>
+          <Score value={vote_average} />
+          <span className="bg-red-600 rounded py-2 px-4 ml-2">
+            {runtime ? `${runtime}min` : `${number_of_seasons} temporadas`}
+          </span>
+
+        
+        </div>
+      </article>
     </div>
   );
 };
